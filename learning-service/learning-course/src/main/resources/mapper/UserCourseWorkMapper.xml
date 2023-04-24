@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.linter.learning.course.dao.UserCourseWorkDao">
+
+    <resultMap type="cn.linter.learning.course.entity.UserCourseWork" id="UserCourseWorkMap">
+        <result property="id" column="id"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="courseId" column="course_id"/>
+        <result property="filePath" column="file_path"/>
+        <result property="fileName" column="file_name"/>
+    </resultMap>
+
+    <resultMap type="cn.linter.learning.course.result.WorkResult" id="WorkResultMap">
+        <result property="url" column="file_path"/>
+        <result property="name" column="file_name"/>
+    </resultMap>
+
+    <!--通过ID查询单个问题-->
+    <select id="selectById" resultMap="WorkResultMap">
+        select  ucw.file_path,ucw.file_name
+        from user_course_work ucw
+        where ucw.course_id = #{courseId} and ucw.created_by=#{userName}
+    </select>
+
+    <insert id="save"  keyProperty="id" useGeneratedKeys="true">
+        insert into user_course_work(created_by, created_time, course_id, file_path, file_name)
+        values (#{createdBy}, #{createdTime}, #{courseId}, #{filePath}, #{fileName})
+    </insert>
+
+    <delete id="delete">
+        delete from user_course_work
+        where course_id = #{courseId} and file_name = #{name} and created_by = #{userName}
+    </delete>
+
+    <!--通过ID查询单个问题-->
+    <select id="query" resultMap="WorkResultMap">
+        select file_path,file_name
+        from user_course_work
+        where course_id = #{courseId} and file_name = #{name} and created_by = #{userName}
+    </select>
+
+</mapper>
