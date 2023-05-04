@@ -7,8 +7,12 @@ import cn.linter.learning.course.entity.Course;
 import cn.linter.learning.course.entity.UserCourseWork;
 import cn.linter.learning.course.service.AnswerService;
 import cn.linter.learning.course.service.UserCourseWorkService;
+import com.alibaba.cloud.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -36,9 +40,6 @@ public class UserCourseWorkController {
     public ResultStatus SaveCourse(@PathVariable("courseId") Long courseId,@RequestParam("name") String fileName,@RequestParam("url") String url,@RequestHeader("Authorization") String token) {
 
         UserCourseWork query = userCourseWorkService.query(courseId, fileName, JwtUtil.getUsername(token));
-        if (null==query){
-            return ResultStatus.SUCCESS;
-        }
         userCourseWorkService.SaveCourse(courseId,fileName,url,JwtUtil.getUsername(token));
        return ResultStatus.SUCCESS;
     }
@@ -48,4 +49,5 @@ public class UserCourseWorkController {
         userCourseWorkService.delete(courseId,name,JwtUtil.getUsername(token));
         return ResultStatus.SUCCESS;
     }
+
 }

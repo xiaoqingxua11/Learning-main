@@ -66,6 +66,7 @@ spring:
                 - /api/cover-pictures/**
                 - /api/profile-pictures/**
                 - /api/work-file/**
+                - /api/download/**
         - id: dfs
           uri: http://121.41.27.115:9000
           predicates:
